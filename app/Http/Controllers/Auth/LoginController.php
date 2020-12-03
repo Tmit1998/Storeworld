@@ -53,15 +53,15 @@ class LoginController extends Controller
         return view('backend.auth.login');
     }
 
-    public function login(Request $request){
-        $data = $request->all();
+    // public function login(Request $request){
+    //     $data = $request->all();
 
-        if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
-            if(Auth::user()->role == 1){
-                return redirect()->route('dashboard');
-            }
+    //     if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
+    //         if(Auth::user()->role == 1){
+    //             return redirect()->route('dashboard');
+    //         }
 
-            return redirect()->route('home');
-        }
-    }
+    //         return redirect()->route('home');
+    //     }
+    // }
 }

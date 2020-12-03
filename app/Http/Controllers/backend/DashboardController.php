@@ -25,7 +25,7 @@ class DashboardController extends Controller
 
       //   session(['name'=>'Thanh']);
       //   echo session('name');
-        dd(1);
+        
         return view('backend.dashboard');
 
         // $cockie = cockie('product_name')->cockie
