@@ -51,25 +51,25 @@ class ProductController extends Controller
     {
         //
 
-        if ($request->hasFile('images')){
-            $files = $request->file('images');
+        // if ($request->hasFile('images')){
+        //     $files = $request->file('images');
             
 
-            foreach ($files as $file) {
-                $name = $file->getClientOriginalName();
-                $file->move('Product', $name);
-            }
+        //     foreach ($files as $file) {
+        //         $name = $file->getClientOriginalName();
+        //         $file->move('Product', $name);
+        //     }
 
-            // $path = Storage::disk('public')->putFileAs('images', $request->file('image'));
-            // $path = Storage::disk('public')->putFileAs('product', $file, $file->getClientOriginalName());
-            // $url = Storage::url($path);
-            // dd($url);
-            // dd($path);
+        //     // $path = Storage::disk('public')->putFileAs('images', $request->file('image'));
+        //     // $path = Storage::disk('public')->putFileAs('product', $file, $file->getClientOriginalName());
+        //     // $url = Storage::url($path);
+        //     // dd($url);
+        //     // dd($path);
 
-            dd($file);
-        }else{
-            dd('khong co file');
-        }
+        //     dd($file);
+        // }else{
+        //     dd('khong co file');
+        // }
 
 
         $products = new Product();
@@ -108,16 +108,16 @@ class ProductController extends Controller
     public function edit($id)
     {
         //
-        $users = User::find(1);
-        $Products = Product::find($id);
+        // $users = User::find(1);
+        // $Products = Product::find($id);
 
-        Gate::define('update', function($products){
-            if ($users->id == $products->user_id) {
-                dd('có quyền');
-            }else{
-                dd('không quyền');
-            }
-        });
+        // Gate::define('update', function($products){
+        //     if ($users->id == $products->user_id) {
+        //         dd('có quyền');
+        //     }else{
+        //         dd('không quyền');
+        //     }
+        // });
 
         // Gate::allows('update', function($products){
         //     if ($users->id == $products->user_id) {
@@ -127,10 +127,10 @@ class ProductController extends Controller
         //     }
         // });
 
-        // $categories = Category::find($id);
-        // return view('backend.products.edit')->with([
-        //     'categories' => $categories
-        // ]);
+        $categories = Category::find($id);
+        return view('backend.products.edit')->with([
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -154,9 +154,8 @@ class ProductController extends Controller
         $products->trademark_id = $request->get('trademark_id');
         $products->category_id = $request->get('category_id');
         $products->status = $request->get('status');
-        // $products->user_id = Auth::user()->id;
+        $products->user_id = Auth::user()->id;
         $products->save();
-
         return redirect()->route('products.index');
 
     }

@@ -1741,6 +1741,7 @@
 	</section>
 
 @endsection
+
 <!-- END CODE Newsletter -->
 
 @section('Modal')

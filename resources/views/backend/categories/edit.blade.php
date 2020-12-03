@@ -32,7 +32,7 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form role="form" action="{{ route('categories.update','$categories->id')}}" method="POST">
+                    <form role="form" action="{{ route('categories.update',$categories->id)}}" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                         
@@ -48,7 +48,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="exampleInputEmail1">depth</label>
+                                <label for="exampleInputEmail1">Độ sâu</label>
                                 <input type="text" class="form-control" id="depth" name="depth" value="{{$categories->depth}}">
                             </div>
                         </div>

@@ -14,10 +14,11 @@ class CreateTrademarksTable extends Migration
     public function up()
     {
         Schema::create('trademarks', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('name');
             $table->string('slug');
             $table->integer('status');
+            $table->bigInteger('user_id');
             $table->timestamps();
         });
     }

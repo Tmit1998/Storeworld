@@ -31,7 +31,7 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form role="form" action="{{ route('products.store','$products->id')}}" method="POST">
+                    <form role="form" action="{{ route('products.store',$products->id)}}" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                         
@@ -54,11 +54,11 @@
                             <div class="form-group">
                                 <label>Thương hiệu sản phẩm</label>
                                 <select class="form-control select2" style="width: 100%;">
-                                    <option>--Chọn thương hiệu---</option>
-                                    <option>Apple</option>
-                                    <option>Samsung</option>
-                                    <option>Nokia</option>
-                                    <option>Oppo</option>
+                                    <option value="0">--Chọn thương hiệu---</option>
+                                    <option value="1">Apple</option>
+                                    <option value="2">Samsung</option>
+                                    <option value="3">Nokia</option>
+                                    <option value="4">Oppo</option>
                                 </select>
                             </div>
                             <div class="row">
@@ -109,7 +109,6 @@
                             <div class="form-group">
                                 <label>Trạng thái sản phẩm</label>
                                 <select name="status" class="form-control select2" style="width: 100%;">
-                                    <option>--Chọn trạng thái---</option>
                                     <option value="0">Đang nhập</option>
                                     <option value="1">Mở bán</option>
                                     <option value="-1">Hết hàng</option>

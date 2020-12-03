@@ -1,4 +1,32 @@
 @extends('backend.layouts.master')
+@section('script')
+
+    <script>
+
+
+
+        $(document).ready(function() {
+            $('#category').DataTable({
+                dom: 'lifrtp',
+                processing: true,
+                serverSide: true,
+                ajax: '/categories/get-data',
+                columns: [
+                    { data: 'DT_RowIndex',searchable:false },
+                    { data: 'name', name: 'categories.name', searchable:true, },
+                    { data: 'slug', name: 'categories.slug' },
+                    { data: 'parent_id', name: 'categories.parent_id' },
+                    { data: 'action', name: 'categories.action' },
+                ]
+            });
+        });
+
+
+
+    </script>       
+
+
+@endsection
 @section('content')
 <!-- Content Header -->
 <div class="head-title py-2">
@@ -41,32 +69,38 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
-                        <table class="table table-hover">
+                        <table class="table table-hover" id="category">
                             <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Tên danh mục</th>
-                                <th>parent_id</th>
-                                <th>depth</th>
-                                <th>Action</th>
+                                <th>Slug</th>
+                                <th>Danh mục cha</th>
+                                <th>Chức năng</th>
                             </tr>
                             </thead>
                             <tbody>
 
-                            @foreach( $categories as $category)
+                            {{-- @foreach( $categories as $category)
                             <tr>
                                 
                                 <td>{{ $category->id }}</td>
                                 <td>{{ $category->name }}</td>
+                                <td>{{ $category->slug }}</td>
                                 <td>{{ $category->parent_id }}</td>
-                                <td>{{ $category->depth }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-default">View</a>
-                                    <button class="btn btn-default">Edit</button>
-                                    <a href="#" class="btn btn-default">Delete</a>
+                                    <a href="{{ route('category.edit', $categories->id) }}" class="btn btn-outline-warning">
+                                        <i class="nav-icon fas fa-pencil mr-1"></i>  Chỉnh sửa
+                                    </a>
+                                    <a href="{{ route('category.edit', $category->id) }}" class="btn btn-outline-primary">
+                                        <i class="nav-icon fas fa-eye mr-1"></i> View
+                                    </a>
+                                    <a href="{{ route('category.destroy', $category->id) }}" class="btn btn-outline-danger">
+                                        <i class="nav-icon fas fa-trash mr-1"></i> Xóa
+                                    </a>
                                 </td>
                             </tr>
-                            @endforeach()
+                            @endforeach() --}}
 
                             </tbody>
                         </table>

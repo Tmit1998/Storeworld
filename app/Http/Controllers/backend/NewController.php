@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\frontend;
+namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\New;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
-class ProductController extends Controller
+class NewController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +16,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
-        // return view('frontend.product.index');
-        return view('frontend.product.single');
+        $news = New::get();
+        return view('backend.news.index', ['news' = $news]);
     }
 
     /**
@@ -26,7 +27,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.news.create');
     }
 
     /**
@@ -37,7 +38,14 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $news = new New();
+        $news->name = $request->get('name');
+        $news->slug = $request->get('name');
+        $news->content = $request->get('content');
+        $news->status = $request->get('status');
+        $news->save();
+
+        return redirect()->route('news.index');
     }
 
     /**
@@ -60,6 +68,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         //
+        return view('backend.news.edit');
     }
 
     /**
@@ -72,6 +81,15 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $news = New::find($id);
+        $news->name = $request->get('name');
+        $news->slug = $request->get('name');
+        $news->content = $request->get('content');
+        $news->status = $request->get('status');
+        $news->save();
+
+        return redirect()->route('news.index');
+    
     }
 
     /**

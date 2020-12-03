@@ -1,4 +1,4 @@
-@extentds()
+@extends('frontend.layouts.master')
 
 @section('breadcrumbs')
 	<div class="breadcrumbs">

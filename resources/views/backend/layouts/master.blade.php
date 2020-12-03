@@ -38,6 +38,11 @@
   <!-- main -->
   <link rel="stylesheet" href="{{asset('/backend/dist/css/main.css')}}">
 
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+
+  
+
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
@@ -106,7 +111,7 @@
 <script src="{{asset('/backend/plugins/jqvmap/maps/jquery.vmap.usa.js')}}"></script>
 
 <!-- jQuery Knob Chart -->
-<script src="/backend/plugins/jquery-knob/jquery.knob.min.js')}}"></script>
+<script src="{{asset('/backend/plugins/jquery-knob/jquery.knob.min.js')}}"></script>
 
 <!-- daterangepicker -->
 <script src="{{asset('/backend/plugins/moment/moment.min.js')}}"></script>
@@ -129,6 +134,11 @@
 
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('/backend/dist/js/demo.js')}}"></script>
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+
+
+@yield('script')
 
 </body>
 </html>

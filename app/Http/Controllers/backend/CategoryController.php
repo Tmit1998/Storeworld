@@ -5,7 +5,9 @@ namespace App\Http\Controllers\backend;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Yajra\Datatables\Datatables;
 
 class CategoryController extends Controller
 {
@@ -17,8 +19,9 @@ class CategoryController extends Controller
     public function index()
     {
         //
-        $categories = Category::get();
-        return view('backend.categories.index')->with(['categories' => $categories]);
+        // $categories = Category::get();
+        // return view('backend.categories.index')->with(['categories' => $categories]);
+        return view('backend.categories.index');
     }
 
     /**
@@ -29,7 +32,6 @@ class CategoryController extends Controller
     public function create()
     {
         //
-
         return view('backend.categories.create');
     }
 
@@ -46,8 +48,9 @@ class CategoryController extends Controller
         $categories->slug = Str::slug($request->get('name'));
         $categories->parent_id = $request->get('parent_id');
         $categories->depth = $request->get('depth');
+        $categories->user_id = 1;
         $categories->save();
-        return redirect()->route('index');
+        return redirect()->route('categories.index');
     }   
 
     /**
@@ -82,13 +85,12 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
-        $categories = Category::find($id);   
-        $categories->name = $request->get('name');
-        $categories->slug = Str::slug($request->get('name'));
-        $categories->parent_id = $request->get('parent_id');
-        $categories->depth = $request->get('depth');       
-        $categories->save();
+        $category= Category::find($id); 
+        $category->name = $request->get('name');
+        $category->slug = Str::slug($request->get('name'));
+        $category->parent_id = $request->get('parent_id');
+        $category->depth = $request->get('depth'); 
+        $category->save();
         return redirect()->route('categories.index');
     }
 
@@ -103,5 +105,34 @@ class CategoryController extends Controller
         $categories = Category::find($id);  
         $categories->delete();
         return redirect()->route('categories.index');
+    }
+
+    public function getData(){
+        $categories = Category::all();
+
+        return DataTables::of($categories)
+            // ->editColumn('avatar', function($user){
+            //     if(empty($user->avatar)){
+            //         return "Chưa có ảnh đại diện";
+            //     }
+            //     return '<img class="direct-chat-img" alt="message user image" src="'.asset('storage/image/user/'.$user>avatar).'">';
+            // })
+
+            ->editColumn('action',function($category){
+                return 'a href="" class="btn btn-outline-warning">
+                            <i class="nav-icon fas fa-pencil mr-1"></i>  Chỉnh sửa
+                        </a>
+                        <a href="" class="btn btn-outline-primary">
+                            <i class="nav-icon fas fa-eye mr-1"></i> View
+                        </a>
+                        <a href="" class="btn btn-outline-danger">
+                            <i class="nav-icon fas fa-trash mr-1"></i> Xóa
+                        </a>';
+            })
+           
+
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->make(true);
     }
 }

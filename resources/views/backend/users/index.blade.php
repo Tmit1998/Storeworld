@@ -1,4 +1,32 @@
 @extends('backend.layouts.master')
+@section('script')
+
+    <script>
+
+
+
+        $(document).ready(function() {
+            $('#categorytable').DataTable({
+                dom: 'lifrtp',
+                processing: true,
+                serverSide: true,
+                ajax: '/users/get-data',
+                columns: [
+                    { data: 'DT_RowIndex',searchable:false },
+                    { data: 'name', name: 'user.name', searchable:true, },
+                    { data: 'email', name: 'user.email' },
+                    { data: 'phone', name: 'user.phone' },
+                    { data: 'action', name: 'user.action' },
+                ]
+            });
+        });
+
+
+
+    </script>       
+
+
+@endsection
 @section('content')
 <!-- Content Header -->
 <div class="head-title py-2">
@@ -9,8 +37,8 @@
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Người dùng</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('users.index')}}">Người dùng</a></li>
                     <li class="breadcrumb-item active">Danh sách</li>
                 </ol>
             </div><!-- /.col -->
@@ -27,7 +55,9 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Danh sách người dùng</h3>
+                        <h3 class="card-title">
+                            <a href="{{route('users.create')}}" class="btn btn-outline-warning">Thêm mới người dùng</a>
+                        </h3>
 
                         <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -41,7 +71,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
-                        <table class="table table-hover">
+                        <table class="table table-hover w-100" id="categorytable">
                             <thead>
                             <tr>
                                 <th>ID</th>
@@ -49,29 +79,45 @@
                                 <th>Tên</th>
                                 <th>Phone</th>
                                 <th>Email</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th>Vai trò</th>
+                                <th>Chức năng</th>
                             </tr>
                             </thead>
                             <tbody>
 
-                            @foreach($users as $user)
+
+
+                            {{-- @foreach($user as $users)
 
                             <tr>
-                                <td>{{ $user->id }}</td>
+                                <td>{{ $users->id }}</td>
                                 <td><img class="direct-chat-img" src="{{asset('backend/dist/img/user1-128x128.jpg')}}" alt="message user image"></td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->phone }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>{{ $user->created_at }}</td>
+                                <td>{{ $users->name }}</td>
+                                <td>{{ $users->phone }}</td>
+                                <td>{{ $users->email }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-default">View</a>
-                                    <a href="#" class="btn btn-default">Edit</a>
-                                    <a href="#" class="btn btn-default">Delete</a>
+                                    @if($users->role == 0)
+                                        Admin
+                                    @elseif($users->role == 1)
+                                        Quản lý
+                                    @elseif($users->role == 2)
+                                        Thành viên
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('users.edit', $users->id) }}" class="btn btn-outline-warning">
+                                        <i class="nav-icon fas fa-pencil mr-1"></i>  Chỉnh sửa
+                                    </a>
+                                    <a href="{{ route('users.edit', $users->id) }}" class="btn btn-outline-primary">
+                                        <i class="nav-icon fas fa-eye mr-1"></i> View
+                                    </a>
+                                    <a href="{{ route('users.destroy', $users->id) }}" class="btn btn-outline-danger">
+                                        <i class="nav-icon fas fa-trash mr-1"></i> Xóa
+                                    </a>
                                 </td>
                             </tr>
 
-                            @endforeach
+                            @endforeach --}}
 
                             </tbody>
 
@@ -84,4 +130,5 @@
             </div>
         </div>
         <!-- /.row (main row) -->
-    </div><!-- /.container-fluid -->@endsection
+    </div><!-- /.container-fluid -->
+@endsection

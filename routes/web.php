@@ -19,13 +19,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-// Route::get('/home', 'HomeController@index')->name('home');
-
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group([
     'namespace' => 'backend',
     'prefix' => '',
-    'middleware' => ['auth', 'auth_admin']
+    // 'middleware' => ['auth', 'auth_admin']
 ], function (){
     // Trang dashboard - trang chủ admin
       Route::get('/dashboard' , 'DashboardController@index')->name('dashboard');
@@ -44,6 +43,7 @@ Route::group([
     // Quản lý người dùng
     Route::group(['prefix' => 'users'], function(){
       Route::get('/index' , 'UserController@index')->name('users.index');
+      Route::get('/get-data' , 'UserController@getData')->name('users.getdata'); // Thêm mới getdata
   		Route::get('/create' , 'UserController@create')->name('users.create');
       Route::post('/store' , 'UserController@store')->name('users.store');
       Route::get('/edit/{users}' , 'UserController@edit')->name('users.edit');
@@ -61,6 +61,7 @@ Route::group([
       Route::get('/edit/{categories}' , 'CategoryController@edit')->name('categories.edit');
       Route::put('/update/{categories}' , 'CategoryController@update')->name('categories.update');
       Route::delete('/destroy/{categories}' , 'CategoryController@destroy')->name('categories.destroy');
+      Route::get('/get-data' , 'CategoryController@getData')->name('categories.getdata');
     });
 
 
@@ -77,15 +78,15 @@ Route::group([
     });
 
 
-    // // Quản lý bài viết
-    //   Route::group(['prefix' => 'news'], function(){
-    //     Route::get('/index' , 'NewsController@index')->name('news.index');
-    //     Route::get('/create' , 'NewsController@create')->name('news.create');
-    //     Route::post('/store' , 'NewsController@store')->name('news.store');
-    //     Route::get('/edit/{new}' , 'NewsController@edit')->name('news.edit');
-    //     Route::put('/update/{new}' , 'NewsController@update')->name('news.update');
-    //     Route::delete('/destroy/{new}' , 'NewsController@destroy')->name('news.destroy');
-    // });
+    // Quản lý bài viết
+      Route::group(['prefix' => 'news'], function(){
+        Route::get('/index' , 'NewController@index')->name('news.index');
+        Route::get('/create' , 'NewController@create')->name('news.create');
+        Route::post('/store' , 'NewController@store')->name('news.store');
+        Route::get('/edit/{new}' , 'NewController@edit')->name('news.edit');
+        Route::put('/update/{new}' , 'NewController@update')->name('news.update');
+        Route::delete('/destroy/{new}' , 'NewController@destroy')->name('news.destroy');
+    });
 
     // // Quản lý chuyên mục
     //   Route::group(['prefix' => 'category'], function(){
@@ -103,6 +104,12 @@ Route::group([
       });
 });
 
+
+
+
+
+
+
 Route::group([
     'namespace' => 'frontend',
     'prefix' => ''
@@ -110,6 +117,12 @@ Route::group([
     // Trang Home - Trang chủ
       Route::get('/home' , 'HomeController@index')->name('home');
 
+      Route::get('/cart/cart', 'CartController@index')->name('cart.cart');
+      Route::get('/cart/add/{id}', 'CartController@add')->name('cart.add');
+      Route::get('/cart/remove/{id}', 'CartController@add')->name('cart.remove');
+
+      // Route::get('/products/index', 'ProductController@index')->name('frontend.products.index');
+      Route::get('/product/single', 'ProductController@index')->name('product.single');
 
     // Trang sản phẩm
     // Route::group(['prefix' => 'products'], function(){

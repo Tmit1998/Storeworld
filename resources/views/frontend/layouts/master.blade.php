@@ -86,7 +86,13 @@
 	<!-- Start Shop Newsletter  -->
 	@yield('Newsletter')
 	<!-- End Shop Newsletter -->
-	
+		
+	@yield('acrchive')
+
+	@yield('cart')
+
+	@yield('single')
+
 	<!-- Modal -->
     @yield('Modal')
     <!-- Modal end -->

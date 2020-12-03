@@ -14,7 +14,7 @@
             <img src="/backend/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+            {{-- <a href="#" class="d-block">{{ Auth::user()->name }}</a> --}}
           </div>
         </div>
 
@@ -34,24 +34,11 @@
 
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-book"></i>
+                <i class="nav-icon fas fa-camera-retro"></i>
                 <p>
-                  Pages
-                  <i class="fas fa-angle-left right"></i>
+                  Thư viện
                 </p>
               </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="pages/examples/invoice.html" class="nav-link">
-                    <p>Tất cả pages</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="pages/examples/profile.html" class="nav-link">
-                    <p>Thêm mới</p>
-                  </a>
-                </li>
-              </ul>
             </li>
 
             <li class="nav-item has-treeview">
@@ -64,18 +51,13 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="news/index" class="nav-link">
+                  <a href="{{route('news.index')}}" class="nav-link">
                     <p>Tất cả bài viết</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="news/create" class="nav-link">
+                  <a href="{{route('news.create')}}" class="nav-link">
                     <p>Thêm mới</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="pages/examples/forgot-password.html" class="nav-link">
-                    <p>Chuyên mục</p>
                   </a>
                 </li>
               </ul>
@@ -118,12 +100,12 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="users/index" class="nav-link">
+                  <a href="{{route('users.index')}}" class="nav-link">
                     <p>Tất cả thành viên</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/create" class="nav-link">
+                  <a href="{{route('users.create')}}" class="nav-link">
                     <p>Thêm mới</p>
                   </a>
                 </li>
@@ -132,26 +114,21 @@
 
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-cog"></i>
+                <i class="nav-icon fas fa-shopping-cart"></i>
                 <p>
-                  Cài đặt chung
+                  Đơn hàng
                   <i class="fas fa-angle-left right"></i>
                 </p>
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
                   <a href="pages/examples/login.html" class="nav-link">
-                    <p>Header</p>
+                    <p>Danh sách đơn hàng</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="pages/examples/register.html" class="nav-link">
-                    <p>Banner</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="pages/examples/register.html" class="nav-link">
-                    <p>Footer</p>
+                    <p>Tạo mới đơn hàng</p>
                   </a>
                 </li>
               </ul>

@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreProductRequest;
 use Illuminate\Support\Facades\Storage;
+use Yajra\Datatables\Datatables;
 
 class UserController extends Controller
 {
@@ -39,10 +40,8 @@ class UserController extends Controller
 
 
 
-        $users = User::get();
-        return view('backend.users.index')->with([
-            'users' => $users
-        ]);
+        // $user = User::get();
+        return view('backend.users.index');
 
     }
 
@@ -82,14 +81,14 @@ class UserController extends Controller
 
         // Thêm disk vào database image
 
-        $users = new User();
-        $users->name = $request->get('name');
-        $users->email = $request->get('email');
-        $users->phone = $request->get('phone');
-        $users->avatar = $request->get('avatar');
-        $users->role = $request->get('role');
-        $users->password = $request->get('password');
-        $users->save();
+        $user = new User();
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->phone = $request->get('phone');
+        $user->avatar = $request->get('avatar');
+        $user->role = $request->get('role');
+        $user->password = $request->get('password');
+        $user->save();
 
         // $images = new Image();
 
@@ -121,8 +120,8 @@ class UserController extends Controller
     public function edit($id)
     {
         //
-        $users = User::find($id);
-        return view('backend.users.edit');
+        $user = User::find($id);
+        return view('backend.users.edit')->with(['user' => $user]);
     }
 
     /**
@@ -135,16 +134,16 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $users = User::find($id);
+        $user = User::find($id);
 
-        $users->name = $request->get('name');
-        $users->phone = $request->get('phone');
-        $users->email = $request->get('email');
+        $user->name = $request->get('name');
+        $user->phone = $request->get('phone');
+        $user->email = $request->get('email');
         // $users->role = $request->get('role');
         $role = $request->get('role');
-        $users->role = 0;
-        $users->password = $request->get('password');
-        $users->save();
+        $user->role = 0;
+        $user->password = $request->get('password');
+        $user->save();
         return redirect()->route('users.index');
 
     }
@@ -158,7 +157,37 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
-        $users = User::find($id);
-        $users->delete();
+        $user = User::find($id);
+        $user->delete();
+    }
+
+
+    public function getData(){
+        $users = User::all();
+
+        return DataTables::of($users)
+            // ->editColumn('avatar', function($user){
+            //     if(empty($user->avatar)){
+            //         return "Chưa có ảnh đại diện";
+            //     }
+            //     return '<img class="direct-chat-img" alt="message user image" src="'.asset('storage/image/user/'.$user>avatar).'">';
+            // })
+
+            ->editColumn('action',function($user){
+                return 'a href="" class="btn btn-outline-warning">
+                            <i class="nav-icon fas fa-pencil mr-1"></i>  Chỉnh sửa
+                        </a>
+                        <a href="" class="btn btn-outline-primary">
+                            <i class="nav-icon fas fa-eye mr-1"></i> View
+                        </a>
+                        <a href="" class="btn btn-outline-danger">
+                            <i class="nav-icon fas fa-trash mr-1"></i> Xóa
+                        </a>';
+            })
+           
+
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->make(true);
     }
 }

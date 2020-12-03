@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\backend;
 
+use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -12,13 +14,7 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
     
-
     public function index(Request $request)
     {
         //
@@ -29,8 +25,29 @@ class DashboardController extends Controller
 
       //   session(['name'=>'Thanh']);
       //   echo session('name');
-
+        dd(1);
         return view('backend.dashboard');
+
+        // $cockie = cockie('product_name')->cockie
+        // $cookie->cookie('name_id', 'phone',1);
+        // return $cookie;
+            
+        // $value = $request->cockie('item'); 
+
+        // return response('oke')->cockie($cockie);
+        // 
+        // 
+        // $categories = Category::get();
+        // // Cache::put('home_Cate', $categories , 60);
+        // // return 1;
+        
+        // $categories = Category::get('home_Cate');
+        // dd($categories);
+
+        // $categories = Cache::remmber('home_cate' , 10, function(){
+        //     $categories = Category::get();
+        //     return $categories;
+        // });
     }
 
     /**

@@ -31,28 +31,28 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form action="{{ route('users.update', $users->id) }}" method="POST" role="form">
+                    <form action="{{ route('users.update', $user->id) }}" method="POST" role="form">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Tên</label>
-                                <input type="text" class="form-control" id="name" name="name" value="{{$users->name}}">
+                                <input type="text" class="form-control" id="name" name="name" value="{{$user->name}}">
                             </div>
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Phone</label>
-                                <input type="tel" class="form-control" id="phone" name="phone" value="{{$users->phone}}">
+                                <input type="tel" class="form-control" id="phone" name="phone" value="{{$user->phone}}">
                             </div>
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" value="{{$users->email}}">
+                                <input type="email" class="form-control" id="email" name="email" value="{{$user->email}}">
                             </div>
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Mật khẩu</label>
-                                <input type="password" class="form-control" id="password" name="password" value="{{$users->password}}">
+                                <input type="password" class="form-control" id="password" name="password" value="{{$user->password}}">
                             </div>
 
                             <div class="form-group">
@@ -60,7 +60,7 @@
                                 <div class="input-group">
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="exampleInputFile">
-                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                        <label class="custom-file-label" for="exampleInputFile"></label>
                                     </div>
                                     <div class="input-group-append">
                                         <span class="input-group-text" id="">Upload</span>
@@ -71,10 +71,15 @@
                             <div class="form-group">
                                 <label>Vai Trò</label>
                                 <select class="form-control select2" style="width: 100%;">
-                                    <option>-- Chọn quyền ---</option>
-                                    <option>Admin</option>
-                                    <option>Quản lý</option>
-                                    <option>Thành viên</option>
+                                    <option value="0" @if($user->role == 0) selected @endif>
+                                        Admin
+                                    </option>
+                                    <option value="1" @if($user->role == 1) selected @endif>
+                                        Quản lý
+                                    </option>
+                                    <option value="2"  @if($user->role == 2) selected @endif>
+                                        Thành viên
+                                    </option> 
                                 </select>
                             </div>
                         </div>

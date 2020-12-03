@@ -41,20 +41,15 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="exampleInputEmail1">parent_id</label>
-                                <input type="text" class="form-control" id="parent_id" name="parent_id" placeholder="parent_id">
+                                <label for="exampleInputEmail1">Danh mục cha</label>
+                                <input type="text" class="form-control" id="parent_id" name="parent_id" placeholder="Danh mục cha">
                             </div>
 
                             <div class="form-group">
-                                <label for="exampleInputEmail1">depth</label>
+                                <label for="exampleInputEmail1">Độ sâu</label>
                                 <input type="text" class="form-control" id="depth" name="depth" placeholder="depth">
                             </div>
 
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Mô tả sản phẩm</label>
-                                <textarea class="textarea" name="content" placeholder="Place some text here"
-                                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                            </div>
                         </div>
                         <!-- /.card-body -->
 
