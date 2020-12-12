@@ -18,7 +18,6 @@ class CreateTrademarksTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->integer('status');
-            $table->bigInteger('user_id');
             $table->timestamps();
         });
     }

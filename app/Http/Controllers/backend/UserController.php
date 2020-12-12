@@ -5,6 +5,9 @@ namespace App\Http\Controllers\backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Image;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreProductRequest;
 use Illuminate\Support\Facades\Storage;
@@ -65,38 +68,20 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-
-
-        // if ($request->hasFile('image')){
-        //     $file = $request->file('image');
-        //     // $path = Storage::disk('public')->putFileAs('images', $request->file('image'));
-        //     $path = Storage::disk('public')->putFileAs('images', $file, $file->getClientOriginalName());
-        //     $url = Storage::url($path);
-        //     dd($url);
-        //     dd($path);
-        //     // dd($file);
-        // }else{
-        //     dd('khong co file');
-        // }
-
-        // Thêm disk vào database image
-
         $user = new User();
         $user->name = $request->get('name');
         $user->email = $request->get('email');
         $user->phone = $request->get('phone');
-        $user->avatar = $request->get('avatar');
         $user->role = $request->get('role');
         $user->password = $request->get('password');
-        $user->save();
+        
+        $save = $user->save();
+        if ($save) {
+            alert()->success('TẠO NGƯỜI DÙNG', 'THÀNH CÔNG');
+        } else {
+            alert()->error('TẠO NGƯỜI DÙNG', 'THẤT BẠI');
+        }
 
-        // $images = new Image();
-
-        // $images->name = $file->getClientOriginalName();
-        // $images->path = $path;
-        // $images->product_id = ;
-
-        // return view('backend.users.index');
         return redirect()->route('users.index');
     }
 
@@ -119,7 +104,6 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
         $user = User::find($id);
         return view('backend.users.edit')->with(['user' => $user]);
     }
@@ -139,11 +123,14 @@ class UserController extends Controller
         $user->name = $request->get('name');
         $user->phone = $request->get('phone');
         $user->email = $request->get('email');
-        // $users->role = $request->get('role');
-        $role = $request->get('role');
-        $user->role = 0;
+        $user->role = $request->get('role');
         $user->password = $request->get('password');
-        $user->save();
+        $save = $user->save();
+        if ($save) {
+            alert()->success('CẬP NGƯỜI DÙNG', 'THÀNH CÔNG');
+        } else {
+            alert()->error('CẬP NGƯỜI DÙNG', 'THẤT BẠI');
+        }
         return redirect()->route('users.index');
 
     }
@@ -159,6 +146,10 @@ class UserController extends Controller
         //
         $user = User::find($id);
         $user->delete();
+        return response()->json([
+            'error'=>false,
+            'message'=>"Xóa thành công"
+        ]);
     }
 
 
@@ -166,28 +157,26 @@ class UserController extends Controller
         $users = User::all();
 
         return DataTables::of($users)
-            // ->editColumn('avatar', function($user){
-            //     if(empty($user->avatar)){
-            //         return "Chưa có ảnh đại diện";
-            //     }
-            //     return '<img class="direct-chat-img" alt="message user image" src="'.asset('storage/image/user/'.$user>avatar).'">';
-            // })
+            ->addColumn('action', function($user){
+                    $action = '<a href="'. route('users.edit', $user->id) .'" class="btn btn-light waves-effect waves-light"> CHỈNH SỬA </a> <button class="btn btn-danger btn-delete" data-id="'.$user->id.'"> XÓA </button>';
+                    return $action;
+                })
 
-            ->editColumn('action',function($user){
-                return 'a href="" class="btn btn-outline-warning">
-                            <i class="nav-icon fas fa-pencil mr-1"></i>  Chỉnh sửa
-                        </a>
-                        <a href="" class="btn btn-outline-primary">
-                            <i class="nav-icon fas fa-eye mr-1"></i> View
-                        </a>
-                        <a href="" class="btn btn-outline-danger">
-                            <i class="nav-icon fas fa-trash mr-1"></i> Xóa
-                        </a>';
-            })
+            ->addColumn('role', function($user){
+                    
+                $zero = 'Admin';
+                $one = 'Thành viên';
+
+                if($user->role == 0){
+                   return $zero;
+                }else{
+                    return $one;
+                }
+
+            })      
            
-
             ->addIndexColumn()
-            ->rawColumns(['action'])
+            ->rawColumns(['action','role'])
             ->make(true);
     }
 }

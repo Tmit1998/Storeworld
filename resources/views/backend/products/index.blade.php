@@ -1,4 +1,67 @@
 @extends('backend.layouts.master')
+
+
+@section('script')
+
+    <script>
+
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('#product').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '/products/get-data',
+                columns: [
+                    { data: 'DT_RowIndex',searchable:false },
+                    { data: 'name', name: 'product.name', searchable:true, },
+                    { data: 'origin_price', name: 'product.origin_price' },
+                    { data: 'sale_price', name: 'product.sale_price' },
+                    { data: 'category_id', name: 'product.category_id' },
+                    { data: 'status', name: 'product.status' },
+                    { data: 'action', name: 'product.action' },
+                ]    
+            });
+
+             $('#product').on('click', '.btn-delete', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                Swal.fire({
+                      title: 'BẠN CÓ CHẮC MUỐN XÓA?',
+                      text: "Bạn sẽ không thể hoàn nguyên điều này!",
+                      icon: 'CẢNH BÁO',
+                      showCancelButton: true,
+                      confirmButtonColor: '#3085d6',
+                      cancelButtonColor: '#d33',
+                      confirmButtonText: 'Yes'
+                    }).then((result) => {
+                      $.ajax({
+                            type: 'DELETE',
+                            url: '/products/destroy/' + id,
+                            data: {id:id},
+                            success: function (data) {
+                                if(!res.error){
+                                    $('#product').DataTable().ajax.reload();
+                                }
+                            }         
+                        });
+                })
+            
+        });
+
+        });
+
+
+       
+
+    </script>    
+
+@endsection
+
+
 @section('content')
 <!-- Content Header -->
 <div class="head-title py-2">
@@ -25,21 +88,13 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Sản phẩm mới nhập</h3>
-
-                        <div class="card-tools">
-                            <div class="input-group input-group-sm" style="width: 150px;">
-                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                                </div>
-                            </div>
-                        </div>
+                        <h3 class="card-title">
+                            <a href="{{route('products.create')}}" class="btn btn-outline-warning">Thêm mới</a>
+                        </h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
-                        <table class="table table-hover">
+                        <table class="table table-hover" id="product">
                             <thead>
                             <tr>
                                 <th>ID</th>
@@ -53,26 +108,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                        @foreach( $products as $product)
-                            <tr>
-                                
-                                <td>{{ $product->id }}</td>
-                                <td>{{ $product->name }}</td>
-                                <td>{{ $product->origin_price }}</td>
-                                <td>{{ $product->sale_price }}</td>
-                                <td>{{ $product->description }}</td>
-                                <td>{{ $product->status }}</td>
-                                <td>{{ $product->category_id }}</td>
-                                <td>
-                                    
-                                </td>
-                                <td>
-                                    <a href="#" class="btn btn-default">View</a>
-                                    <a href="#" class="btn btn-default">Edit</a>
-                                    <a href="#" class="btn btn-default">Delete</a>
-                                </td>
-                            </tr>
-                            @endforeach()
+                       
 
                             </tbody>
                         </table>

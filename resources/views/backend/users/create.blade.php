@@ -75,36 +75,19 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group">
-                                <label for="exampleInputFile">Hình ảnh sản phẩm</label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="exampleInputFile" name="image">
-                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                    </div>
-                                    <div class="input-group-append">
-                                        <span class="input-group-text" id="">Upload</span>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="form-group d-none">
-                                <label for="exampleInputEmail1">Tên</label>
-                                <input type="text" class="form-control" id="role" name="role" placeholder="Vai trò">
+                            <div class="form-group">
+                                <label>Phân quyền</label>
+                                <select class="form-control" name="role" id="role" style="width: 100%;">
+                                    <option value="0">Admin</option>
+                                    <option value="1">Thành viên</option>
+                                </select>
+
                                 @error('role')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <!-- <div class="form-group">
-                                <label>Vai Trò</label>
-                                <select class="form-control select2" style="width: 100%;">
-                                    <option>-- Chọn quyền ---</option>
-                                    <option value="0">Admin</option>
-                                    <option value="1">Quản lý</option>
-                                    <option value="2">Thành viên</option>
-                                </select>
-                            </div> -->
                         </div>
                         <!-- /.card-body -->
 

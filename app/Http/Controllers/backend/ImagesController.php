@@ -17,8 +17,8 @@ class ImagesController extends Controller
     {
         //
 
-        $images = Image::get();
-        return view('backend.images.index')->with(['images' => $images]);
+        $image = Image::get();
+        return view('backend.images.index')->with(['image' => $image]);
     }
 
     /**

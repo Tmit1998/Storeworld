@@ -4,10 +4,12 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Http\Requests\StoreCategoryRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Yajra\Datatables\Datatables;
+use RealRashid\SweetAlert\Facades\Aler;
 
 class CategoryController extends Controller
 {
@@ -18,10 +20,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
-        // $categories = Category::get();
-        // return view('backend.categories.index')->with(['categories' => $categories]);
+
+
         return view('backend.categories.index');
+
+
     }
 
     /**
@@ -31,8 +34,15 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
-        return view('backend.categories.create');
+
+
+
+        $category = Category::get();
+        return view('backend.categories.create')->with([
+            'category' => $category
+        ]);
+
+
     }
 
     /**
@@ -41,16 +51,33 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        $categories = new Category();
-        $categories->name = $request->get('name');
-        $categories->slug = Str::slug($request->get('name'));
-        $categories->parent_id = $request->get('parent_id');
-        $categories->depth = $request->get('depth');
-        $categories->user_id = 1;
-        $categories->save();
+
+        $parent = Category::find($request->get('parent_id'));
+        $category = new Category();
+        $category->name = $request->get('name');
+        $category->slug = Str::slug($request->get('name'));
+        $category->parent_id = $request->get('parent_id');
+
+        if (isset($parent)) {
+            $category->depth = $parent->depth + 1;
+        } else {
+            $category->depth = 1;
+        }
+
+        $save = $category->save();
+
+        if ($save) {
+            alert()->success('TẠO DANH MỤC', 'THÀNH CÔNG');
+        } else {
+            alert()->error('TẠO DANH MỤC', 'THẤT BẠI');
+        }
+
         return redirect()->route('categories.index');
+
+
+
     }   
 
     /**
@@ -72,8 +99,19 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $categories = Category::find($id);   
-        return view('backend.categories.edit', ['categories' => $categories]);
+
+
+
+
+        $category = Category::find($id);
+        $categories = Category::get();
+        return view('backend.categories.edit')->with([
+            'categories' => $categories,
+            'category' => $category
+        ]);
+
+
+
     }
 
     /**
@@ -85,13 +123,16 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+
         $category= Category::find($id); 
         $category->name = $request->get('name');
         $category->slug = Str::slug($request->get('name'));
         $category->parent_id = $request->get('parent_id');
-        $category->depth = $request->get('depth'); 
         $category->save();
         return redirect()->route('categories.index');
+
+
     }
 
     /**
@@ -102,37 +143,36 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $categories = Category::find($id);  
-        $categories->delete();
-        return redirect()->route('categories.index');
+        $category = Category::find($id);  
+        $category->delete();
+        return response()->json([
+            'error'=>false,
+            'message'=>"Xóa thành công"
+        ]);
+
+
     }
 
     public function getData(){
         $categories = Category::all();
 
         return DataTables::of($categories)
-            // ->editColumn('avatar', function($user){
-            //     if(empty($user->avatar)){
-            //         return "Chưa có ảnh đại diện";
-            //     }
-            //     return '<img class="direct-chat-img" alt="message user image" src="'.asset('storage/image/user/'.$user>avatar).'">';
-            // })
+            ->addColumn('action', function($category){
+                    $action = '<a href="'. route('categories.edit', $category->id) .'" class="btn btn-light waves-effect waves-light"> CHỈNH SỬA </a> <button class="btn btn-danger btn-delete" data-id="'.$category->id.'"> XÓA </button>';
+                    return $action;
+                })  
 
-            ->editColumn('action',function($category){
-                return 'a href="" class="btn btn-outline-warning">
-                            <i class="nav-icon fas fa-pencil mr-1"></i>  Chỉnh sửa
-                        </a>
-                        <a href="" class="btn btn-outline-primary">
-                            <i class="nav-icon fas fa-eye mr-1"></i> View
-                        </a>
-                        <a href="" class="btn btn-outline-danger">
-                            <i class="nav-icon fas fa-trash mr-1"></i> Xóa
-                        </a>';
-            })
+            ->addColumn('parent', function($category){
+                if($category->parent_id == 0){
+                    return $category->parent_id;
+                }else {
+                    return '-';
+                }
+            })       
            
-
             ->addIndexColumn()
-            ->rawColumns(['action'])
+            ->rawColumns(['action','parent'])
             ->make(true);
     }
+
 }

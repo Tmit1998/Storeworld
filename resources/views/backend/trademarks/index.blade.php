@@ -1,4 +1,58 @@
 @extends('backend.layouts.master')
+@section('script')
+
+    <script>
+
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('#trademark').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '/trademarks/get-data',
+                columns: [
+                    { data: 'DT_RowIndex',searchable:false },
+                    { data: 'name', name: 'trademark.name', searchable:true, },
+                    { data: 'status', name: 'trademark.status' },
+                    { data: 'action', name: 'trademark.action' },
+                ]
+            });
+
+             $('#trademark').on('click', '.btn-delete', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                Swal.fire({
+                      title: 'BẠN CÓ CHẮC MUỐN XÓA?',
+                      text: "Bạn sẽ không thể hoàn nguyên điều này!",
+                      icon: 'CẢNH BÁO',
+                      showCancelButton: true,
+                      confirmButtonColor: '#3085d6',
+                      cancelButtonColor: '#d33',
+                      confirmButtonText: 'Yes'
+                    }).then((result) => {
+                      $.ajax({
+                            type: 'DELETE',
+                            url: '/trademarks/destroy/' + id,
+                            data: {id:id},
+                            success: function (data) {
+                                if(!res.error){
+                                    $('#trademark').DataTable().ajax.reload();
+                                }
+                            }         
+                        });
+                })
+            
+            });
+
+        });
+
+    </script>       
+
+
+@endsection
 @section('content')
 <!-- Content Header -->
 <div class="head-title py-2">
@@ -10,8 +64,7 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Thương Hiệu</a></li>
-                    <li class="breadcrumb-item active">Danh sách</li>
+                    <li class="breadcrumb-item active">Thương hiệu</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -25,44 +78,23 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Sản phẩm mới nhập</h3>
-
-                        <div class="card-tools">
-                            <div class="input-group input-group-sm" style="width: 150px;">
-                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                                </div>
-                            </div>
+                        <div class="btn btn-outline-warning">
+                            <a href="{{route('trademarks.create')}}">Thêm mới</a>
                         </div>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
-                        <table class="table table-hover">
+                        <table class="table table-hover" id="trademark">
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Tên sản phẩm</th>
-                                <th>Thời gian</th>
-                                <th>Status</th>
-                                <th>Mô tả</th>
+                                <th>Tên thương hiệu</th>
+                                <th>Trạng thái</th>
+                                <th>action</th>
                             </tr>
                             </thead>
                             <tbody>
-                        @foreach($trademarks as $trademark)
-                            <tr>
-                                <td>{{ $trademark->id }}</td>
-                                <td>{{ $trademark->name }}</td>
-                                <td>{{ $trademark->status }}</td>
-                                <td>
-                                    <a href="#" class="btn btn-default">View</a>
-                                    <a href="#" class="btn btn-default">Edit</a>
-                                    <a href="#" class="btn btn-default">Delete</a>
-                                </td>
-                            </tr>
-                            @endforeach
-
+                                
                             </tbody>
                         </table>
                     </div>

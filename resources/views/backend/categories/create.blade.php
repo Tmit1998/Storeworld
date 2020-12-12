@@ -39,22 +39,25 @@
                                 <label for="exampleInputEmail1">Tên danh mục</label>
                                 <input type="text" class="form-control" id="name" name="name" placeholder="Tên danh mục">
                             </div>
+                            @error('name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
 
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Danh mục cha</label>
-                                <input type="text" class="form-control" id="parent_id" name="parent_id" placeholder="Danh mục cha">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Độ sâu</label>
-                                <input type="text" class="form-control" id="depth" name="depth" placeholder="depth">
+                                <label for="parent_id">Danh mục cha</label>
+                                <select class="form-control select2" style="width: 100%;" name="category_id">
+                                    <option value="0">Trống</option>
+                                    @foreach($category as $categories)
+                                        <option value="{{ $categories->id }}">{{ $categories->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
                         </div>
                         <!-- /.card-body -->
 
                         <div class="card-footer">
-                            <a href="{{ route('categories.index') }}" class="btn btn-default">Huỷ bỏ</a>
+                            <a href="{{ route('categories.create') }}" class="btn btn-default">Huỷ bỏ</a>
                             <button type="submit" class="btn btn-sucess">Tạo mới</button>
                         </div>
                     </form>

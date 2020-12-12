@@ -22,93 +22,9 @@
 <body class="hold-transition login-page">
 <div class="login-box">
 
-{{--     <div class="authentication">
-        <h2>ĐĂNG NHẬP / ĐĂNG KÝ</h2>
-        
-        <div class="container" id="container">
-            <div class="form-container sign-up-container">
-                <form action="#">
-                    <h1>Tạo tài khoản</h1>
-                    <div class="social-container">
-                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                    <span>hoặc sử dụng email của bạn để đăng ký</span>
-                    <input type="text" placeholder="Name" />
-                    <input type="email" placeholder="Email" />
-                    <input type="password" placeholder="Password" />
-                    <button>Đăng ký</button>
-                </form>
-            </div>
-            <div class="form-container sign-in-container">
-                <form action="{{ route('login') }}" method="post">
-                    <h1>Đăng nhập</h1>
-                    <div class="social-container">
-                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                    <span>hoặc sử dụng tài khoản của bạn</span>
-                    <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email">
-
-                    @error('email')
-                      <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                    @enderror
-
-                    <input type="password" placeholder="Password" id="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-                    @error('password')
-                      <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                    @enderror
-
-                    <a href="#">Quên mật khẩu?</a>
-                    <button type="submit">Đăng nhập</button>
-                </form>
-            </div>
-            <div class="overlay-container">
-                <div class="overlay">
-                    <div class="overlay-panel overlay-left">
-                        <h1>Chào bạn!</h1>
-                        <p>Nhập thông tin cá nhân của bạn và bắt đầu hành trình với chúng tôi</p>
-                        <button class="ghost" id="signIn">Đăng nhập</button>
-                    </div>
-                    <div class="overlay-panel overlay-right">
-                        <h1>Chào bạn!</h1>
-                        <p>Nhập thông tin cá nhân của bạn và bắt đầu hành trình với chúng tôi</p>
-                        <button class="ghost" id="signUp">Đăng ký</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
-{{--     <script>
-      const signUpButton = document.getElementById('signUp');
-      const signInButton = document.getElementById('signIn');
-      const container = document.getElementById('container');
-
-      signUpButton.addEventListener('click', () => {
-          container.classList.add('right-panel-active');
-      });
-
-      signInButton.addEventListener('click', () => {
-          container.classList.remove('right-panel-active');
-      });
-   </script> --}}
-
-
-
-
-
-
-
   <div class="card">
     <div class="card-body login-card-body">
-      <p class="login-box-msg">Sign in to start your session</p>
+      <p class="login-box-msg"><strong>LOGIN</strong></p>
 
       <form action="{{ route('login') }}" method="post">
       	@csrf
@@ -158,26 +74,26 @@
 	              </label> -->
 
                 <label class="form-check-label" for="remember">
-                    {{ __('Remember Me') }}
+                    {{ __('GHI NHỚ') }}
                 </label>
 
             </div>
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+            <button type="submit" class="btn btn-primary btn-block">ĐĂNG NHẬP</button>
           </div>
           <!-- /.col -->
         </div>
       </form>
 
       <div class="social-auth-links text-center mb-3">
-        <p>- OR -</p>
+        <p>- HOẶC -</p>
         <a href="#" class="btn btn-block btn-primary">
-          <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+          <i class="fab fa-facebook mr-2"></i> ĐĂNG NHẬP BẰNG FACEBOOK
         </a>
         <a href="#" class="btn btn-block btn-danger">
-          <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+          <i class="fab fa-google-plus mr-2"></i> ĐĂNG NHẬP BẰNG GOOGLE+
         </a>
       </div>
       <!-- /.social-auth-links -->
@@ -185,12 +101,12 @@
       <p class="mb-1">
         @if (Route::has('password.request'))
               <a class="btn btn-link" href="{{ route('password.request') }}">
-                  {{ __('Forgot Your Password?') }}
+                  {{ __('Quên mật khẩu?') }}
               </a>
           @endif
       </p>
       <p class="mb-0">
-        <a href="register" class="text-center btn btn-link">Register a new membership</a>
+        <a href="register" class="text-center btn btn-link">ĐĂNG KÝ</a>
       </p>
     </div>
     <!-- /.login-card-body -->

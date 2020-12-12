@@ -26,7 +26,7 @@
 
   <div class="card">
     <div class="card-body register-card-body">
-      <p class="login-box-msg">Register a new membership</p>
+      <p class="login-box-msg"><strong>ĐĂNG KÝ</strong></p>
 
       <form action="{{ route('register') }}" method="POST">
       	@csrf

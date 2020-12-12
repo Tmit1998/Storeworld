@@ -9,12 +9,7 @@ class Product extends Model
 
     public function Category()
     {
-        return $this->belongsTo(Category::class);
-    }
-
-    public function Oders()
-    {
-        return $this->belongsToMany(Oder::class);
+        return $this->hasMany(Category::class);
     }
 
     public function Images()

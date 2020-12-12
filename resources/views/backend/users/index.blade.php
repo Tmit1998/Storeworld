@@ -7,15 +7,15 @@
 
         $(document).ready(function() {
             $('#categorytable').DataTable({
-                dom: 'lifrtp',
                 processing: true,
                 serverSide: true,
                 ajax: '/users/get-data',
                 columns: [
                     { data: 'DT_RowIndex',searchable:false },
                     { data: 'name', name: 'user.name', searchable:true, },
-                    { data: 'email', name: 'user.email' },
                     { data: 'phone', name: 'user.phone' },
+                    { data: 'email', name: 'user.email' },
+                    { data: 'role', name: 'user.role' },
                     { data: 'action', name: 'user.action' },
                 ]
             });
@@ -75,7 +75,6 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Ảnh đại diện</th>
                                 <th>Tên</th>
                                 <th>Phone</th>
                                 <th>Email</th>
@@ -84,40 +83,6 @@
                             </tr>
                             </thead>
                             <tbody>
-
-
-
-                            {{-- @foreach($user as $users)
-
-                            <tr>
-                                <td>{{ $users->id }}</td>
-                                <td><img class="direct-chat-img" src="{{asset('backend/dist/img/user1-128x128.jpg')}}" alt="message user image"></td>
-                                <td>{{ $users->name }}</td>
-                                <td>{{ $users->phone }}</td>
-                                <td>{{ $users->email }}</td>
-                                <td>
-                                    @if($users->role == 0)
-                                        Admin
-                                    @elseif($users->role == 1)
-                                        Quản lý
-                                    @elseif($users->role == 2)
-                                        Thành viên
-                                    @endif
-                                </td>
-                                <td>
-                                    <a href="{{ route('users.edit', $users->id) }}" class="btn btn-outline-warning">
-                                        <i class="nav-icon fas fa-pencil mr-1"></i>  Chỉnh sửa
-                                    </a>
-                                    <a href="{{ route('users.edit', $users->id) }}" class="btn btn-outline-primary">
-                                        <i class="nav-icon fas fa-eye mr-1"></i> View
-                                    </a>
-                                    <a href="{{ route('users.destroy', $users->id) }}" class="btn btn-outline-danger">
-                                        <i class="nav-icon fas fa-trash mr-1"></i> Xóa
-                                    </a>
-                                </td>
-                            </tr>
-
-                            @endforeach --}}
 
                             </tbody>
 
@@ -132,3 +97,4 @@
         <!-- /.row (main row) -->
     </div><!-- /.container-fluid -->
 @endsection
+

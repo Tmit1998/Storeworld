@@ -7,11 +7,14 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Trademark;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Gate;
+use Yajra\Datatables\Datatables;
+use RealRashid\SweetAlert\Facades\Aler;
 
 class ProductController extends Controller
 {
@@ -23,8 +26,7 @@ class ProductController extends Controller
     public function index()
     {
         //
-        $products = Product::get();
-        return view('backend.products.index')->with(['products' => $products]);
+        return view('backend.products.index');
     }
 
     /**
@@ -36,8 +38,10 @@ class ProductController extends Controller
     {
         //
         $categories = Category::get();
+        $trademark = Trademark::get();
         return view('backend.products.create')->with([
-            'categories' => $categories
+            'categories' => $categories,
+            'trademark' => $trademark,
         ]);
     }
 
@@ -49,41 +53,26 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
-
-        // if ($request->hasFile('images')){
-        //     $files = $request->file('images');
-            
-
-        //     foreach ($files as $file) {
-        //         $name = $file->getClientOriginalName();
-        //         $file->move('Product', $name);
-        //     }
-
-        //     // $path = Storage::disk('public')->putFileAs('images', $request->file('image'));
-        //     // $path = Storage::disk('public')->putFileAs('product', $file, $file->getClientOriginalName());
-        //     // $url = Storage::url($path);
-        //     // dd($url);
-        //     // dd($path);
-
-        //     dd($file);
-        // }else{
-        //     dd('khong co file');
-        // }
-
-
-        $products = new Product();
-        $products->name = $request->get('name');
-        $products->slug = $request->get('name');
-        $products->origin_price = $request->get('origin_price');
-        $products->sale_price = $request->get('sale_price');
-        $products->content = $request->get('content');
-        $products->description = $request->get('description');
-        $products->trademark_id = $request->get('trademark_id');
-        $products->category_id = $request->get('category_id');
-        $products->status = $request->get('status');
-        // $products->user_id = Auth::user()->id;
-        $products->save();
+        $product = new Product();
+        $product->name = $request->get('name');
+        $product->slug = Str::slug($request->get('name'));
+        $product->origin_price = $request->get('origin_price');
+        $product->sale_price = $request->get('sale_price');
+        $product->content = $request->get('content');
+        $product->description = $request->get('description');
+        $product->trademark_id = $request->get('trademark_id');
+        $product->category_id = $request->get('category_id');
+        $product->status = $request->get('status');
+        $product->user_id = 1;
+        $file = $request->file('avatar');
+        $path = Storage::disk('public')->putFileAs('uploads/thumbnail', $file, $file->getClientOriginalName());
+        $product->avatar = $path;
+        $save = $product->save();
+        if ($save) {
+            alert()->success('TẠO SẢN PHẨM', 'THÀNH CÔNG');
+        } else {
+            alert()->error('TẠO SẢN PHẨM', 'THẤT BẠI');
+        }
 
         return redirect()->route('products.index');
     }
@@ -127,7 +116,8 @@ class ProductController extends Controller
         //     }
         // });
 
-        $categories = Category::find($id);
+        $category = Category::find($id);
+        $categories = Category::get();
         return view('backend.products.edit')->with([
             'categories' => $categories
         ]);
@@ -146,7 +136,7 @@ class ProductController extends Controller
 
         $products = Product::find($id);
         $products->name = $request->get('name');
-        $products->slug = $request->get('name');
+        $products->slug = Str::slug($request->get('name'));
         $products->origin_price = $request->get('origin_price');
         $products->sale_price = $request->get('sale_price');
         $products->content = $request->get('content');
@@ -154,8 +144,14 @@ class ProductController extends Controller
         $products->trademark_id = $request->get('trademark_id');
         $products->category_id = $request->get('category_id');
         $products->status = $request->get('status');
-        $products->user_id = Auth::user()->id;
-        $products->save();
+        $save = $product->save();
+        $save = $product->save();
+        if ($save) {
+            alert()->success('CẬP NHẬT SẢN PHẨM', 'THÀNH CÔNG');
+        } else {
+            alert()->error('CẬP NHẬT SẢN PHẨM', 'THẤT BẠI');
+        }
+            
         return redirect()->route('products.index');
 
     }
@@ -172,6 +168,47 @@ class ProductController extends Controller
 
         $products = Product::find($id);
         $products->delete();
-        return redirect()->route('products.index');
+        return response()->json([
+            'error'=>false,
+            'message'=>"Xóa thành công"
+        ]);
+    }
+
+
+    public function getData(){
+        $products = Product::all();
+
+        return DataTables::of($products)
+            ->addColumn('action', function($product){
+                    $action = '<a href="'. route('productS.edit', $product->id) .'" class="btn btn-light waves-effect waves-light"> CHỈNH SỬA </a> <button class="btn btn-danger btn-delete" data-id="'.$product->id.'"> XÓA </button>';
+                    return $action;
+                })  
+
+            ->addColumn('category_id', function($product){
+                    if($product->category_id == 0){
+                        return $category->category_id->name;
+                    }else {
+                        // return '-';
+                    }
+                    // $categoryname = '';
+                    // return $categoryname;
+                }) 
+
+            ->addColumn('status', function($product){
+                    
+                $zero = 'BẢN NHÁP';
+                $one = 'XUẤT BẢN';
+
+                if($user->role == 0){
+                   return $zero;
+                }else{
+                    return $one;
+                }
+
+            })        
+           
+            ->addIndexColumn()
+            ->rawColumns(['action','status','categoryname'])
+            ->make(true);
     }
 }

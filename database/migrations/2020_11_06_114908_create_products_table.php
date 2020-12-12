@@ -22,14 +22,15 @@ class CreateProductsTable extends Migration
             $table->integer('sale_price')->default(0);
             $table->text('content')->nullable();
             $table->integer('status')->default(0);
-            $table->integer('user_id')->nullable();
-            $table->integer('category_id')->nullable();
-            $table->integer('trademark_id')->nullable();
+            $table->integer('user_id')->referenced('id')->on('users');
+            $table->integer('category_id')->referenced('id')->on('categories');
+            $table->integer('trademark_id')->referenced('id')->on('trademarks');
             $table->integer('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
     }
+
 
     /**
      * Reverse the migrations.

@@ -27,7 +27,7 @@
                 <!-- general form elements -->
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Tạo sản phẩm</h3>
+                        <h3 class="card-title">Cập nhật thương hiệu</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
@@ -44,12 +44,10 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Trạng thái sản phẩm</label>
+                                <label>Trạng thái</label>
                                 <select name="status" class="form-control select2" style="width: 100%;">
-                                    <option>--Chọn trạng thái---</option>
-                                    <option value="0">Đang nhập</option>
-                                    <option value="1">Mở bán</option>
-                                    <option value="-1">Hết hàng</option>
+                                    <option value="0">HOẠT ĐỘNG</option>
+                                    <option value="1">TẠM NGỪNG</option>
                                 </select>
                             </div>
                         </div>

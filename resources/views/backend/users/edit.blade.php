@@ -56,28 +56,15 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="exampleInputFile">Hình ảnh sản phẩm</label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="exampleInputFile">
-                                        <label class="custom-file-label" for="exampleInputFile"></label>
-                                    </div>
-                                    <div class="input-group-append">
-                                        <span class="input-group-text" id="">Upload</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
                                 <label>Vai Trò</label>
-                                <select class="form-control select2" style="width: 100%;">
-                                    <option value="0" @if($user->role == 0) selected @endif>
+                                <select class="form-control select2" name="role" style="width: 100%;">
+                                    <option value="{{$user->role}}" @if($user->role == 0) selected @endif>
                                         Admin
                                     </option>
-                                    <option value="1" @if($user->role == 1) selected @endif>
+                                    {{-- <option value="1" @if($user->role == 1) selected @endif>
                                         Quản lý
-                                    </option>
-                                    <option value="2"  @if($user->role == 2) selected @endif>
+                                    </option> --}}
+                                    <option value="{{$user->role}}"  @if($user->role == 1) selected @endif>
                                         Thành viên
                                     </option> 
                                 </select>
@@ -86,7 +73,7 @@
                         <!-- /.card-body -->
 
                         <div class="card-footer">
-                            <a href="{{ route('categories.index') }}" class="btn btn-default">Huỷ bỏ</a>
+                            <a href="{{ route('users.index') }}" class="btn btn-default">Huỷ bỏ</a>
                             <button type="submit" class="btn btn-sucess">Cập nhật</button>
                         </div>
                     </form>

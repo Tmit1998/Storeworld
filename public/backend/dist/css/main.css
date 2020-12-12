@@ -235,3 +235,21 @@ label:not(.form-check-label):not(.custom-file-label){
     height: 40px;
     width: 40px;
 }
+.custom-select{
+    padding: 0px 20px !important;
+    margin: 0 10px;
+}
+
+table.dataTable{
+    margin: 0;
+    border-bottom: 1px solid #dee2e6;
+}
+.dataTables_length,.dataTables_filter{
+    padding: 15px 10px 0;
+}
+.dataTables_paginate{
+    padding: 0 10px 10px;
+}
+.dataTables_info{
+    padding: 10px;
+}

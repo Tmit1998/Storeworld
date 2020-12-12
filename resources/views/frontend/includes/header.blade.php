@@ -71,7 +71,7 @@
 					<div class="col-lg-2 col-md-2 col-12">
 						<!-- Logo -->
 						<div class="logo">
-							<a href="index.html"><img src="{{asset('/frontend/images/logo.png')}}" alt="logo"></a>
+							<a href="index.html"><img src="{{asset('/frontend/images/logo.jpg')}}" alt="logo"></a>
 						</div>
 						<!--/ End Logo -->
 						<!-- Search Form -->
@@ -93,13 +93,13 @@
 						<div class="search-bar-top">
 							<div class="search-bar">
 								<select>
-									<option selected="selected">All Category</option>
-									<option>watch</option>
+									<option selected="selected">All</option>
+									<option></option>
 									<option>mobile</option>
 									<option>kid’s item</option>
 								</select>
 								<form>
-									<input name="search" placeholder="Search Products Here....." type="search">
+									<input name="search" placeholder="Tìm kiếm....." type="search">
 									<button class="btnn"><i class="ti-search"></i></button>
 								</form>
 							</div>
@@ -156,23 +156,16 @@
 						<div class="navbar-collapse">	
 							<div class="nav-inner">	
 								<ul class="nav main-menu menu navbar-nav">
-										<li class="active"><a href="#">Home</a></li>
-										<li><a href="#">Product</a></li>												
-										<li><a href="#">Service</a></li>
-										<li><a href="#">Shop<i class="ti-angle-down"></i><span class="new">New</span></a>
+										<li class="active"><a href="#">TRANG CHỦ</a></li>
+										<li><a href="#">TIN TỨC</a></li>
+										<li><a href="#">ĐỒ CHƠI<i class="ti-angle-down"></i></a>
 											<ul class="dropdown">
-												<li><a href="shop-grid.html">Shop Grid</a></li>
-												<li><a href="cart.html">Cart</a></li>
-												<li><a href="checkout.html">Checkout</a></li>
+												<li><a href="shop-grid.html">ĐỒ CHƠI NAM</a></li>
+												<li><a href="cart.html">ĐỒ CHƠI NỮ</a></li>
 											</ul>
 										</li>
-										<li><a href="#">Pages</a></li>									
-										<li><a href="#">Blog<i class="ti-angle-down"></i></a>
-											<ul class="dropdown">
-												<li><a href="blog-single-sidebar.html">Blog Single Sidebar</a></li>
-											</ul>
-										</li>
-										<li><a href="contact.html">Contact Us</a></li>
+										<li><a href="#">BLOG</a></li>									
+										<li><a href="contact.html">LIÊN HỆ</a></li>
 									</ul>
 							</div>
 						</div>

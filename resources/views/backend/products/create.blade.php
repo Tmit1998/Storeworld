@@ -31,7 +31,7 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form role="form" action="{{ route('products.store')}}" method="POST" enctype="multipart/form-data">
+                    <form role="form" action="{{ route('products.store')}}" method="POST">
                         {{ csrf_field() }}
                         
                         <div class="card-body">
@@ -52,12 +52,10 @@
                             </div>
                             <div class="form-group">
                                 <label>Thương hiệu sản phẩm</label>
-                                <select class="form-control select2" style="width: 100%;">
-                                    <option>--Chọn thương hiệu---</option>
-                                    <option>Apple</option>
-                                    <option>Samsung</option>
-                                    <option>Nokia</option>
-                                    <option>Oppo</option>
+                                <select class="form-control select2" name="trademark_id" style="width: 100%;">
+                                    @foreach($trademark as $trademarks)
+                                        <option value="{{ $trademarks->id }}">{{ $trademarks->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="row">
@@ -96,19 +94,18 @@
                                 <label for="exampleInputFile">Hình ảnh sản phẩm</label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="exampleInputFile" name="images[]" multiple>
-                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                        <input type="file" class="custom-file-input" id="avatar" name="avatar">
+                                        <label class="custom-file-label" for="exampleInputFile">Chọn hình ảnh</label>
                                     </div>
                                     <div class="input-group-append">
-                                        <span class="input-group-text" id="">Upload</span>
+                                        <span class="input-group-text" id="">Đăng</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label>Trạng thái sản phẩm</label>
+                                <label>Trạng thái</label>
                                 <select name="status" class="form-control select2" style="width: 100%;">
-                                    <option>--Chọn trạng thái---</option>
                                     <option value="0">Đang nhập</option>
                                     <option value="1">Mở bán</option>
                                     <option value="-1">Hết hàng</option>

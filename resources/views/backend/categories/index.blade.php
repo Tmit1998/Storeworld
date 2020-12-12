@@ -3,28 +3,57 @@
 
     <script>
 
-
-
         $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
             $('#category').DataTable({
-                dom: 'lifrtp',
                 processing: true,
                 serverSide: true,
                 ajax: '/categories/get-data',
                 columns: [
                     { data: 'DT_RowIndex',searchable:false },
-                    { data: 'name', name: 'categories.name', searchable:true, },
-                    { data: 'slug', name: 'categories.slug' },
-                    { data: 'parent_id', name: 'categories.parent_id' },
-                    { data: 'action', name: 'categories.action' },
-                ]
+                    { data: 'name', name: 'category.name', searchable:true, },
+                    { data: 'slug', name: 'category.slug' },
+                    { data: 'parent_id', name: 'category.parent_id' },
+                    { data: 'action', name: 'category.action' },
+                ]    
             });
+
+             $('#category').on('click', '.btn-delete', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                Swal.fire({
+                      title: 'BẠN CÓ CHẮC MUỐN XÓA?',
+                      text: "Bạn sẽ không thể hoàn nguyên điều này!",
+                      icon: 'CẢNH BÁO',
+                      showCancelButton: true,
+                      confirmButtonColor: '#3085d6',
+                      cancelButtonColor: '#d33',
+                      confirmButtonText: 'Yes'
+                    }).then((result) => {
+                      $.ajax({
+                            type: 'DELETE',
+                            url: '/categories/destroy/' + id,
+                            data: {id:id},
+                            success: function (data) {
+                                if(!res.error){
+                                    $('#category').DataTable().ajax.reload();
+                                }
+                            }         
+                        });
+                })
+            
+        });
+
         });
 
 
+       
 
-    </script>       
-
+    </script>    
 
 @endsection
 @section('content')
@@ -53,18 +82,8 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <!-- <h3 class="card-title">Sản phẩm mới nhập</h3> -->
                         <div class="btn btn-outline-warning">
-                            <a href="{{route('categories.create')}}">Thêm mới danh mục</a>
-                        </div>
-                        <div class="card-tools">
-                            <div class="input-group input-group-sm" style="width: 150px;">
-                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                                </div>
-                            </div>
+                            <a href="{{route('categories.create')}}">Thêm mới</a>
                         </div>
                     </div>
                     <!-- /.card-header -->
@@ -80,28 +99,7 @@
                             </tr>
                             </thead>
                             <tbody>
-
-                            {{-- @foreach( $categories as $category)
-                            <tr>
                                 
-                                <td>{{ $category->id }}</td>
-                                <td>{{ $category->name }}</td>
-                                <td>{{ $category->slug }}</td>
-                                <td>{{ $category->parent_id }}</td>
-                                <td>
-                                    <a href="{{ route('category.edit', $categories->id) }}" class="btn btn-outline-warning">
-                                        <i class="nav-icon fas fa-pencil mr-1"></i>  Chỉnh sửa
-                                    </a>
-                                    <a href="{{ route('category.edit', $category->id) }}" class="btn btn-outline-primary">
-                                        <i class="nav-icon fas fa-eye mr-1"></i> View
-                                    </a>
-                                    <a href="{{ route('category.destroy', $category->id) }}" class="btn btn-outline-danger">
-                                        <i class="nav-icon fas fa-trash mr-1"></i> Xóa
-                                    </a>
-                                </td>
-                            </tr>
-                            @endforeach() --}}
-
                             </tbody>
                         </table>
                     </div>
@@ -113,3 +111,4 @@
         <!-- /.row (main row) -->
     </div><!-- /.container-fluid -->
 @endsection
+

@@ -29,9 +29,16 @@
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
                         <div class="row">
-                            @foreach( $images as $image)
+                            @foreach( $image as $images)
                             <div class="col-12 col-sm-4 col-md-3 col-lg-2 col-xl-2">
-                                <img src="{{asset('$image->name')}}">
+                                <img src="/public/thumbnail/.'$images->name'.">
+                            </div>
+                            @endforeach
+                        </div>
+                        <div class="row">
+                            @foreach( $image as $images)
+                            <div class="col-12 col-sm-4 col-md-3 col-lg-2 col-xl-2">
+                                <img src="/public/images/.'$images->name'.">
                             </div>
                             @endforeach
                         </div>

@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
 {
+	protected $table = 'images';
 
-    //public function Product()
+	public function Post()
     {
-        return $this->belongsTo(Product::class);
+        return $this->hasOne(Post::class, 'id', 'avatar');
     }
 }

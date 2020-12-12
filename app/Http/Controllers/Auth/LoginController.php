@@ -55,12 +55,12 @@ class LoginController extends Controller
 
     // public function login(Request $request){
     //     $data = $request->all();
-
+        
     //     if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
-    //         if(Auth::user()->role == 1){
+    //         if(Auth::user()->role = 0){
     //             return redirect()->route('dashboard');
     //         }
-
+            
     //         return redirect()->route('home');
     //     }
     // }

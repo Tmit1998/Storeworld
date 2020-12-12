@@ -6,13 +6,13 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Tạo danh mục sản phẩm</h1>
+                <h1 class="m-0 text-dark">Chỉnh sửa danh mục sản phẩm</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Trang chủ</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('categories.index') }}">Danh mục sản phẩm</a></li>
-                    <li class="breadcrumb-item active">Tạo danh mục sản phẩm</li>
+                    <li class="breadcrumb-item active">Chỉnh sửa danh mục sản phẩm</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -31,25 +31,26 @@
                         <h3 class="card-title">Chỉnh sửa danh mục</h3>
                     </div>
                     <!-- /.card-header -->
+
                     <!-- form start -->
-                    <form role="form" action="{{ route('categories.update',$categories->id)}}" method="POST">
+                    <form role="form" action="{{ route('categories.update',$category->id)}}" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                         
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Tên danh mục</label>
-                                <input type="text" class="form-control" id="name" name="name" value="{{$categories->name}}">
+                                <input type="text" class="form-control" id="name" name="name" value="{{$category->name}}">
                             </div>
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Danh mục cha</label>
-                                <input type="text" class="form-control" id="parent_id" name="parent_id" value="{{$categories->parent_id}}">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Độ sâu</label>
-                                <input type="text" class="form-control" id="depth" name="depth" value="{{$categories->depth}}">
+                                <select class="form-control select2" style="width: 100%;" name="parent_id">
+                                    <option value="0">Trống</option>
+                                    @foreach($categories as $value)
+                                        <option value="{{ $value->id }}" @if($value->id == $category->parent_id) selected @endif>{{ $value->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -59,9 +60,10 @@
                             <button type="submit" class="btn btn-sucess">Cập nhật</button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>
-        <!-- /.row (main row) -->
-    </div><!-- /.container-fluid -->
+        
+    </div>
 @endsection
